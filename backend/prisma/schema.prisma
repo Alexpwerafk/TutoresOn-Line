@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  TUTOR
+  ADMIN
+}
+
+enum EducationalLevel {
+  HIGHSCHOOL
+  COLLEGE
+  UNIVERSITY
+}
+
+enum SessionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id               String   @id @default(uuid())
+  email            String   @unique
+  passwordHash     String
+  role             Role
+  fullName         String
+  locationLat      Float?
+  locationLng      Float?
+  reputationScore  Float    @default(0)
+  isOnlineExpress  Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  // Relaciones
+  tutorSubjects    TutorSubject[]
+  availabilities   Availability[]
+  sessionsAsStudent Session[] @relation("StudentSessions")
+  sessionsAsTutor   Session[] @relation("TutorSessions")
+  reviewsGiven      Review[]  @relation("Reviewer")
+  reviewsReceived   Review[]  @relation("Reviewee")
+
+  @@map("users")
+}
+
+model Subject {
+  id              String           @id @default(uuid())
+  name            String           @unique
+  level           EducationalLevel
+
+  // Relaciones
+  tutorSubjects   TutorSubject[]
+  sessions        Session[]
+
+  @@map("subjects")
+}
+
+model TutorSubject {
+  id         String  @id @default(uuid())
+  tutorId    String
+  subjectId  String
+  hourlyRate Decimal
+
+  tutor      User    @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  subject    Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([tutorId, subjectId])
+  @@map("tutor_subjects")
+}
+
+model Availability {
+  id         String @id @default(uuid())
+  tutorId    String
+  dayOfWeek  Int    // 0 = Sunday, 6 = Saturday
+  startTime  String // Format: HH:MM
+  endTime    String // Format: HH:MM
+
+  tutor      User   @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+
+  @@map("availabilities")
+}
+
+model Session {
+  id                  String        @id @default(uuid())
+  studentId           String
+  tutorId             String
+  subjectId           String
+  scheduledAt         DateTime
+  status              SessionStatus @default(PENDING)
+  meetingLink         String?
+  isPresential        Boolean       @default(false)
+  aiSuggestedSyllabus String?       @db.Text
+  createdAt           DateTime      @default(now())
+
+  student             User          @relation("StudentSessions", fields: [studentId], references: [id], onDelete: Cascade)
+  tutor               User          @relation("TutorSessions", fields: [tutorId], references: [id], onDelete: Cascade)
+  subject             Subject       @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  review              Review?
+
+  @@map("sessions")
+}
+
+model Review {
+  id          String   @id @default(uuid())
+  sessionId   String   @unique
+  reviewerId  String
+  revieweeId  String
+  rating      Int
+  comment     String?  @db.Text
+  createdAt   DateTime @default(now())
+
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  reviewer    User     @relation("Reviewer", fields: [reviewerId], references: [id], onDelete: Cascade)
+  reviewee    User     @relation("Reviewee", fields: [revieweeId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
