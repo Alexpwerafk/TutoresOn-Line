@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -44,9 +46,9 @@ export default function Home() {
           🎓 Tutores<span className="text-academic-cerulean">On-Line</span>
         </h1>
         <nav className="space-x-4 hidden md:block">
-          <button className="hover:text-academic-cerulean transition">Buscar Tutores</button>
-          <button className="hover:text-academic-cerulean transition">Soy Tutor</button>
-          <button className="bg-academic-yale px-4 py-2 rounded-md font-semibold hover:bg-academic-cerulean transition shadow-md">Iniciar Sesión</button>
+          <Link href="/buscar-tutores" className="hover:text-academic-cerulean transition">Buscar Tutores</Link>
+          <Link href="/soy-tutor" className="hover:text-academic-cerulean transition">Soy Tutor</Link>
+          <Link href="/login" className="bg-academic-yale px-4 py-2 rounded-md font-semibold hover:bg-academic-cerulean transition shadow-md text-white">Iniciar Sesión</Link>
         </nav>
       </header>
 
