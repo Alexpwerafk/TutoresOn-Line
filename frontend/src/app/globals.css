@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Academic Color Palette */
+  --color-academic-oxford: #0f172a;
+  --color-academic-yale: #1e3a8a;
+  --color-academic-cerulean: #0ea5e9;
+  --color-academic-platinum: #f8fafc;
+  --color-academic-goldenrod: #eab308;
+}
+
+:root {
+  --background: var(--color-academic-platinum);
+  --foreground: var(--color-academic-oxford);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: var(--color-academic-oxford);
+    --foreground: var(--color-academic-platinum);
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
