@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import userRoutes from './routes/user.routes';
 import matchRoutes from './routes/match.routes';
+import authRoutes from './routes/auth.routes';
 
 const app = express();
 // El puerto por defecto es 3001, pero si no especificas otro en .env, usamos 3001
@@ -11,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/match', matchRoutes);
 
