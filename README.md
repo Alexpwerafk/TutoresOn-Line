@@ -39,21 +39,32 @@ Por favor revisa la carpeta `/docs` para encontrar:
 
 ## ⚙️ Cómo ejecutar el proyecto (Modo Desarrollo)
 
-### Backend
+Hemos configurado el proyecto para que puedas levantar tanto el Backend como el Frontend simultáneamente desde la raíz del proyecto.
+
+### 1. Instalación de dependencias (Una sola vez)
+Desde la raíz del proyecto (carpeta `TutoresOnLine`), ejecuta:
+```bash
+npm run install:all
+```
+*(Este comando instalará las dependencias de la raíz, del backend y del frontend automáticamente).*
+
+### 2. Base de Datos (Opcional por ahora)
+Si ya tienes la configuración de tu Base de Datos en el archivo `.env` del backend:
 ```bash
 cd backend
-npm install
 npx prisma generate
 npx prisma db push
-npm run dev
+cd ..
 ```
 
-### Frontend Web
+### 3. Levantar los servidores
+Desde la raíz del proyecto (carpeta `TutoresOnLine`), ejecuta:
 ```bash
-cd frontend
-npm install
 npm run dev
 ```
+Esto iniciará simultáneamente:
+- El **Backend (API)** en `http://localhost:3001`
+- El **Frontend Web** en `http://localhost:3000`
 
 ---
 *Desarrollado bajo marco de trabajo ágil Scrum.*
