@@ -1,0 +1,28 @@
+{
+  "name": "tutoresonline",
+  "version": "1.0.0",
+  "description": "Plataforma integral de tutorías en línea y presenciales. Conecta estudiantes con tutores calificados mediante un sistema de reservas, videoconferencias integradas, inteligencia artificial para el \"Match\" perfecto y un sistema de solicitudes en tiempo real tipo \"Uber\".",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alexpwerafk/TutoresOn-Line.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Alexpwerafk/TutoresOn-Line/issues"
+  },
+  "homepage": "https://github.com/Alexpwerafk/TutoresOn-Line#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
